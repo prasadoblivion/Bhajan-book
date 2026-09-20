@@ -1,0 +1,16 @@
+{
+  "name":"Bhajan Book",
+  "short_name":"Bhajan Book",
+  "description":"A simple offline Marathi devotional bhajan and aarti book.",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "orientation":"portrait",
+  "background_color":"#fffaf2",
+  "theme_color":"#7c3f1d",
+  "lang":"mr",
+  "categories":["lifestyle","books","music"],
+  "icons":[
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
