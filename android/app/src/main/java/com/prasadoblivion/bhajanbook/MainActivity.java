@@ -19,9 +19,6 @@ public class MainActivity extends Activity {
     private static class LocalContentWebViewClient extends WebViewClientCompat {
         private final WebViewAssetLoader assetLoader;
 
-        LocalContentWebViewClient(WebViewAssetLoader assetLoader) {
-            this.assetLoader = assetLoader;
-        }
 
         private boolean handleExternalUrl(Uri uri) {
             if ("mailto".equalsIgnoreCase(uri.getScheme())) {
