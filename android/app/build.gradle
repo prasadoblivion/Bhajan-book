@@ -11,6 +11,22 @@ android {
         versionCode 1
         versionName '1.0.0'
     }
+
+    sourceSets {
+        main {
+            res.srcDir(layout.buildDirectory.dir("generated/res/omLauncher"))
+        }
+    }
+}
+
+def prepareOmLauncher = tasks.register("prepareOmLauncher", Copy) {
+    from("src/main/assets/images/om.png")
+    into(layout.buildDirectory.dir("generated/res/omLauncher/drawable-nodpi"))
+    rename { "om_launcher.png" }
+}
+
+tasks.named("preBuild").configure {
+    dependsOn(prepareOmLauncher)
 }
 
 dependencies {
