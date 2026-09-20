@@ -1,7 +1,9 @@
 package com.prasadoblivion.bhajanbook;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.net.Uri;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -19,6 +21,34 @@ public class MainActivity extends Activity {
 
         LocalContentWebViewClient(WebViewAssetLoader assetLoader) {
             this.assetLoader = assetLoader;
+        }
+
+        private boolean handleExternalUrl(Uri uri) {
+            if ("mailto".equalsIgnoreCase(uri.getScheme())) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                if (intent.resolveActivity(viewContext.getPackageManager()) != null) {
+                    viewContext.startActivity(intent);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private final Activity viewContext;
+
+        LocalContentWebViewClient(WebViewAssetLoader assetLoader, Activity activity) {
+            this.assetLoader = assetLoader;
+            this.viewContext = activity;
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return handleExternalUrl(request.getUrl());
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return handleExternalUrl(Uri.parse(url));
         }
 
         @Override
@@ -70,7 +100,7 @@ public class MainActivity extends Activity {
                 )
                 .build();
 
-        webView.setWebViewClient(new LocalContentWebViewClient(assetLoader));
+        webView.setWebViewClient(new LocalContentWebViewClient(assetLoader, this));
         webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
         webView.loadUrl("https://appassets.androidplatform.net/assets/index.html");
     }
