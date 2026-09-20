@@ -2,8 +2,8 @@ package com.prasadoblivion.bhajanbook;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.net.Uri;
+import android.os.Bundle;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -18,24 +18,28 @@ public class MainActivity extends Activity {
 
     private static class LocalContentWebViewClient extends WebViewClientCompat {
         private final WebViewAssetLoader assetLoader;
-
-
-        private boolean handleExternalUrl(Uri uri) {
-            if ("mailto".equalsIgnoreCase(uri.getScheme())) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-                if (intent.resolveActivity(viewContext.getPackageManager()) != null) {
-                    viewContext.startActivity(intent);
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private final Activity viewContext;
+        private final Activity activity;
 
         LocalContentWebViewClient(WebViewAssetLoader assetLoader, Activity activity) {
             this.assetLoader = assetLoader;
-            this.viewContext = activity;
+            this.activity = activity;
+        }
+
+        private boolean handleExternalUrl(Uri uri) {
+            if (!"mailto".equalsIgnoreCase(uri.getScheme())) {
+                return false;
+            }
+
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:" + (uri.getSchemeSpecificPart() == null ? "" : uri.getSchemeSpecificPart())));
+
+            try {
+                activity.startActivity(Intent.createChooser(emailIntent, "Send email"));
+            } catch (Exception ignored) {
+                // No email application is installed. Keep the WebView unchanged.
+            }
+
+            return true;
         }
 
         @Override
@@ -63,7 +67,7 @@ public class MainActivity extends Activity {
                 WebView view,
                 String url
         ) {
-            return assetLoader.shouldInterceptRequest(android.net.Uri.parse(url));
+            return assetLoader.shouldInterceptRequest(Uri.parse(url));
         }
     }
 
