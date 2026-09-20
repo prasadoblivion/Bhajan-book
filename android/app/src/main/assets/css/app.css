@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "Manrope";
-	src: url("../assets/fonts/manrope-latin.woff2") format("woff2");
+	src: url("../fonts/manrope-latin.woff2") format("woff2");
 	font-style: normal;
 	font-weight: 200 800;
 	font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
 	font-family: "Anek Devanagari";
-	src: url("../assets/fonts/anek-devanagari.woff2") format("woff2");
+	src: url("../fonts/anek-devanagari.woff2") format("woff2");
 	font-style: normal;
 	font-weight: 100 800;
 	font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
 	font-family: "Tiro Devanagari Marathi";
-	src: url("../assets/fonts/tiro-marathi-devanagari.woff2") format("woff2");
+	src: url("../fonts/tiro-marathi-devanagari.woff2") format("woff2");
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
 	font-family: "Tiro Devanagari Marathi";
-	src: url("../assets/fonts/tiro-marathi-latin.woff2") format("woff2");
+	src: url("../fonts/tiro-marathi-latin.woff2") format("woff2");
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
@@ -180,7 +180,7 @@ main {
 	margin-bottom: 12px;
 	overflow: hidden;
 	border-radius: 8px;
-	background: #758057 url("../assets/images/hero.jpeg") center / cover no-repeat;
+	background: #758057 url("../images/hero.jpeg") center / cover no-repeat;
 	box-shadow: var(--shadow-lg);
 }
 
@@ -331,7 +331,7 @@ main {
 	border: 1px solid rgba(36, 35, 31, 0.08);
 	border-radius: 50%;
 	background-color: var(--card-tint, #f5e5d8);
-	background-image: var(--deity-image, url("../assets/images/om.png"));
+	background-image: var(--deity-image, url("../images/om.png"));
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -404,42 +404,42 @@ main {
 .readerArt[data-type="durga"] {
 	--card-accent: #9d2f4f;
 	--card-tint: #f4dfe5;
-	--deity-image: url("../assets/images/durga.jpeg");
+	--deity-image: url("../images/durga.jpeg");
 }
 .card[data-type="shiva"],
 .readerArt[data-type="shiva"] {
 	--card-accent: #426f7b;
 	--card-tint: #dcebed;
-	--deity-image: url("../assets/images/shiva.png");
+	--deity-image: url("../images/shiva.png");
 }
 .card[data-type="vitthal"],
 .readerArt[data-type="vitthal"] {
 	--card-accent: #3f5d9b;
 	--card-tint: #e1e7f5;
-	--deity-image: url("../assets/images/panduranga.jpeg");
+	--deity-image: url("../images/panduranga.jpeg");
 }
 .card[data-type="hanuman"],
 .readerArt[data-type="hanuman"] {
 	--card-accent: #c24f29;
 	--card-tint: #f6e0d7;
-	--deity-image: url("../assets/images/hanuman.png");
+	--deity-image: url("../images/hanuman.png");
 }
 .card[data-type="datta"],
 .readerArt[data-type="datta"] {
 	--card-accent: #6f4b86;
 	--card-tint: #eae1ef;
-	--deity-image: url("../assets/images/datta.jpeg");
+	--deity-image: url("../images/datta.jpeg");
 }
 .card[data-type="dnyaneshwar"],
 .readerArt[data-type="dnyaneshwar"] {
 	--card-accent: #4c7452;
 	--card-tint: #e1ecdf;
-	--deity-image: url("../assets/images/om.png");
+	--deity-image: url("../images/om.png");
 }
 
 .card[data-type="ganesha"],
 .readerArt[data-type="ganesha"] {
-	--deity-image: url("../assets/images/ganesha.png");
+	--deity-image: url("../images/ganesha.png");
 }
 
 .emptyState {
@@ -711,7 +711,7 @@ a:focus-visible {
 		padding: 24px;
 		overflow: hidden;
 		border-radius: 8px;
-		background: #b8716c url("../assets/images/lyrics_side_bg.jpeg") center / cover no-repeat;
+		background: #b8716c url("../images/lyrics_side_bg.jpeg") center / cover no-repeat;
 		box-shadow: var(--shadow-lg);
 	}
 
@@ -731,7 +731,7 @@ a:focus-visible {
 		border: 3px solid rgba(255, 255, 255, 0.72);
 		border-radius: 50%;
 		background-color: var(--card-tint, #f5e5d8);
-		background-image: var(--deity-image, url("../assets/images/om.png"));
+		background-image: var(--deity-image, url("../images/om.png"));
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
