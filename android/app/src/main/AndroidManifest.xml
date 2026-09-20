@@ -3,8 +3,8 @@
     <application
         android:theme="@style/AppTheme"
         android:label="@string/app_name"
-        android:icon="@drawable/ic_launcher"
-        android:roundIcon="@drawable/ic_launcher"
+        android:icon="@drawable/om_launcher"
+        android:roundIcon="@drawable/om_launcher"
         android:allowBackup="false"
         android:supportsRtl="true">
         <activity
