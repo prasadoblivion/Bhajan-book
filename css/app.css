@@ -1,0 +1,773 @@
+@font-face {
+	font-family: "Manrope";
+	src: url("../assets/fonts/manrope-latin.woff2") format("woff2");
+	font-style: normal;
+	font-weight: 200 800;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Anek Devanagari";
+	src: url("../assets/fonts/anek-devanagari.woff2") format("woff2");
+	font-style: normal;
+	font-weight: 100 800;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Tiro Devanagari Marathi";
+	src: url("../assets/fonts/tiro-marathi-devanagari.woff2") format("woff2");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+0900-097F, U+1CD0-1CFF, U+A8E0-A8FF;
+}
+
+@font-face {
+	font-family: "Tiro Devanagari Marathi";
+	src: url("../assets/fonts/tiro-marathi-latin.woff2") format("woff2");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	unicode-range: U+0000-024F;
+}
+
+:root {
+	--font-ui: "Manrope", "Anek Devanagari", "Nirmala UI", sans-serif;
+	--font-devanagari: "Anek Devanagari", "Nirmala UI", sans-serif;
+	--font-reading: "Tiro Devanagari Marathi", "Nirmala UI", serif;
+	--canvas: #f7f4ec;
+	--paper: #fffdf8;
+	--ink: #24231f;
+	--muted: #706c62;
+	--line: #ded9cc;
+	--saffron: #d96c2b;
+	--saffron-deep: #9f3f1f;
+	--marigold: #f2b84b;
+	--lotus: #9d2f4f;
+	--forest: #244d44;
+	--forest-soft: #dce8df;
+	--safe-top: env(safe-area-inset-top, 0px);
+	--safe-bottom: env(safe-area-inset-bottom, 0px);
+	--shadow-sm: 0 8px 24px rgba(58, 45, 29, 0.08);
+	--shadow-lg: 0 24px 70px rgba(35, 27, 18, 0.18);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	min-height: 100vh;
+	margin: 0;
+	background: linear-gradient(rgba(62, 80, 69, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 80, 69, 0.025) 1px, transparent 1px), var(--canvas);
+	background-size: 28px 28px;
+	color: var(--ink);
+	font-family: var(--font-ui);
+}
+
+button,
+input,
+a {
+	font: inherit;
+}
+
+button {
+	touch-action: manipulation;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.visuallyHidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.view {
+	display: none;
+}
+
+.view.active {
+	display: block;
+	animation: reveal 280ms ease both;
+}
+
+@keyframes reveal {
+	from {
+		opacity: 0;
+		transform: translateY(4px);
+	}
+}
+
+.top {
+	position: sticky;
+	top: 0;
+	z-index: 30;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	height: calc(58px + var(--safe-top));
+	padding: var(--safe-top) 14px 0;
+	background: rgba(247, 244, 236, 0.9);
+	border-bottom: 1px solid rgba(36, 35, 31, 0.08);
+	backdrop-filter: blur(18px) saturate(130%);
+}
+
+.logo {
+	display: grid;
+	place-items: center;
+	width: 36px;
+	height: 36px;
+	color: #fff;
+	background: var(--lotus);
+	border-radius: 50% 50% 44% 44%;
+	box-shadow: inset 0 -5px 0 rgba(68, 8, 25, 0.12);
+	font: 700 18px var(--font-reading);
+}
+
+.brand {
+	font-family: var(--font-ui);
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.sub {
+	color: var(--muted);
+	font-size: 10px;
+	letter-spacing: 0;
+}
+
+.topHome,
+.iconButton {
+	display: grid;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid var(--line);
+	border-radius: 50%;
+	background: var(--paper);
+	color: var(--forest);
+	cursor: pointer;
+}
+
+.topHome {
+	margin-left: auto;
+}
+
+main {
+	width: min(100%, 1280px);
+	margin: 0 auto;
+	padding: 12px 12px 28px;
+}
+
+.hero {
+	position: relative;
+	min-height: 164px;
+	margin-bottom: 12px;
+	overflow: hidden;
+	border-radius: 8px;
+	background: #758057 url("../assets/images/hero.jpeg") center / cover no-repeat;
+	box-shadow: var(--shadow-lg);
+}
+
+.hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+	pointer-events: none;
+}
+
+.hero::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 76px;
+	height: 3px;
+	background: var(--marigold);
+}
+
+.collectionBar {
+	display: grid;
+	gap: 9px;
+	margin-bottom: 14px;
+}
+
+.versionTabs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3px;
+	padding: 3px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: #eae6dc;
+}
+
+.tab {
+	min-height: 40px;
+	padding: 7px 10px;
+	border: 0;
+	border-radius: 5px;
+	background: transparent;
+	color: var(--muted);
+	font-size: 12px;
+	font-weight: 750;
+	cursor: pointer;
+}
+
+.tab[aria-selected="true"] {
+	background: var(--paper);
+	color: var(--forest);
+	box-shadow: 0 2px 10px rgba(41, 49, 42, 0.1);
+}
+
+.search {
+	display: flex;
+	align-items: center;
+	height: 46px;
+	padding: 0 13px;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	background: var(--paper);
+	color: var(--forest);
+}
+
+.search svg {
+	width: 18px;
+	height: 18px;
+	flex: none;
+}
+
+.search input {
+	width: 100%;
+	margin-left: 9px;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: var(--ink);
+	font-size: 14px;
+}
+
+.sectionHead {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 18px 1px 10px;
+}
+
+.sectionHead h2 {
+	margin: 0;
+	font-family: var(--font-ui);
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.collectionCount {
+	color: var(--muted);
+	font-size: 11px;
+}
+
+.grid {
+	display: grid;
+	gap: 8px;
+}
+
+.card {
+	position: relative;
+	display: grid;
+	grid-template-columns: 48px minmax(0, 1fr) 28px;
+	align-items: center;
+	gap: 10px;
+	min-height: 72px;
+	width: 100%;
+	padding: 8px 10px;
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-radius: 7px;
+	background: var(--paper);
+	color: var(--ink);
+	text-align: left;
+	cursor: pointer;
+	transition:
+		border-color 180ms ease,
+		transform 180ms ease,
+		box-shadow 180ms ease;
+}
+
+.card::before {
+	content: "";
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 3px;
+	background: var(--card-accent, var(--saffron));
+}
+
+.card:hover {
+	transform: translateY(-2px);
+	border-color: color-mix(in srgb, var(--card-accent, var(--saffron)) 48%, var(--line));
+	box-shadow: var(--shadow-sm);
+}
+
+.cardMark {
+	position: relative;
+	width: 48px;
+	height: 48px;
+	border: 1px solid rgba(36, 35, 31, 0.08);
+	border-radius: 50%;
+	background-color: var(--card-tint, #f5e5d8);
+	background-image: var(--deity-image, url("../assets/images/om.png"));
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	box-shadow: 0 4px 12px rgba(58, 45, 29, 0.1);
+}
+
+.cardNumber {
+	position: absolute;
+	right: -3px;
+	bottom: -1px;
+	display: grid;
+	place-items: center;
+	width: 18px;
+	height: 18px;
+	border: 2px solid var(--paper);
+	border-radius: 50%;
+	background: var(--forest);
+	color: #fff;
+	font: 700 9px sans-serif;
+}
+
+.cardBody {
+	min-width: 0;
+}
+
+.cardTitle {
+	overflow: hidden;
+	color: var(--ink);
+	font-family: var(--font-devanagari);
+	font-size: 15px;
+	font-weight: 750;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cardMeta {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 3px;
+	overflow: hidden;
+	color: var(--muted);
+	font-size: 10px;
+	white-space: nowrap;
+}
+
+.langTag {
+	flex: none;
+	padding: 2px 6px;
+	border-radius: 4px;
+	background: var(--forest-soft);
+	color: var(--forest);
+	font-size: 9px;
+	font-weight: 800;
+	text-transform: uppercase;
+}
+
+.cardArrow {
+	display: grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #f0ede4;
+	color: var(--forest);
+	font-size: 16px;
+}
+
+.card[data-type="durga"],
+.readerArt[data-type="durga"] {
+	--card-accent: #9d2f4f;
+	--card-tint: #f4dfe5;
+	--deity-image: url("../assets/images/durga.jpeg");
+}
+.card[data-type="shiva"],
+.readerArt[data-type="shiva"] {
+	--card-accent: #426f7b;
+	--card-tint: #dcebed;
+	--deity-image: url("../assets/images/shiva.png");
+}
+.card[data-type="vitthal"],
+.readerArt[data-type="vitthal"] {
+	--card-accent: #3f5d9b;
+	--card-tint: #e1e7f5;
+	--deity-image: url("../assets/images/panduranga.jpeg");
+}
+.card[data-type="hanuman"],
+.readerArt[data-type="hanuman"] {
+	--card-accent: #c24f29;
+	--card-tint: #f6e0d7;
+	--deity-image: url("../assets/images/hanuman.png");
+}
+.card[data-type="datta"],
+.readerArt[data-type="datta"] {
+	--card-accent: #6f4b86;
+	--card-tint: #eae1ef;
+	--deity-image: url("../assets/images/datta.jpeg");
+}
+.card[data-type="dnyaneshwar"],
+.readerArt[data-type="dnyaneshwar"] {
+	--card-accent: #4c7452;
+	--card-tint: #e1ecdf;
+	--deity-image: url("../assets/images/om.png");
+}
+
+.card[data-type="ganesha"],
+.readerArt[data-type="ganesha"] {
+	--deity-image: url("../assets/images/ganesha.png");
+}
+
+.emptyState {
+	padding: 40px 14px;
+	color: var(--muted);
+	text-align: center;
+}
+
+.reader {
+	width: min(100%, 1060px);
+	margin: 0 auto;
+}
+
+.readerTop {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 8px;
+}
+
+.btn {
+	min-height: 40px;
+	padding: 0 10px;
+	border: 0;
+	background: transparent;
+	color: var(--forest);
+	font-size: 12px;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+.count {
+	margin-left: auto;
+	color: var(--muted);
+	font-size: 11px;
+}
+
+.readerLayout {
+	display: block;
+}
+
+.readerArt {
+	display: none;
+}
+
+.panel {
+	background: var(--paper);
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	box-shadow: 0 6px 20px rgba(58, 45, 29, 0.05);
+}
+
+.content {
+	padding: 14px 16px 24px;
+}
+
+.invocation {
+	margin-bottom: 5px;
+	color: var(--lotus);
+	font-size: 11px;
+	font-weight: 800;
+}
+
+.content h2 {
+	margin: 0;
+	font-family: var(--font-reading);
+	font-size: clamp(24px, 7vw, 42px);
+	font-weight: 600;
+	line-height: 1.18;
+}
+
+.content .meta {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	margin: 6px 0 13px;
+	color: var(--muted);
+	font-size: 11px;
+}
+
+.lyrics {
+	white-space: pre-line;
+	font-family: var(--font-reading);
+	font-size: clamp(18px, 4.8vw, 24px);
+	line-height: 1.58;
+}
+
+.nav {
+	position: sticky;
+	bottom: 0;
+	z-index: 20;
+	padding: 8px 0 calc(7px + var(--safe-bottom));
+	background: linear-gradient(transparent 0, var(--canvas) 26%);
+}
+
+.navrow {
+	display: grid;
+	grid-template-columns: 1fr 1.2fr 0.72fr;
+	gap: 6px;
+	padding-top: 8px;
+}
+
+.nav button {
+	min-height: 44px;
+	padding: 0 8px;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: var(--paper);
+	color: var(--forest);
+	font-size: 11px;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+.nav .next {
+	border-color: var(--forest);
+	background: var(--forest);
+	color: #fff;
+}
+
+.nav button:disabled {
+	opacity: 0.38;
+}
+
+.hint {
+	display: none;
+}
+
+.appFooter {
+	padding: 16px 14px calc(18px + var(--safe-bottom));
+	border-top: 1px solid var(--line);
+	color: var(--muted);
+	font-size: 10px;
+	text-align: center;
+}
+
+.appFooter .devName {
+	color: var(--ink);
+	font-weight: 700;
+}
+
+.appFooter a {
+	color: var(--lotus);
+}
+
+.photoCredit {
+	display: block;
+	margin-top: 4px;
+	font-size: 9px;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+	outline: 3px solid var(--marigold);
+	outline-offset: 2px;
+}
+
+@media (min-width: 600px) {
+	main {
+		padding: 20px;
+	}
+
+	.hero {
+		min-height: 250px;
+	}
+
+	.collectionBar {
+		grid-template-columns: minmax(330px, 430px) minmax(240px, 1fr);
+	}
+
+	.grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 12px;
+	}
+
+	.card {
+		min-height: 92px;
+		padding: 12px 14px;
+	}
+
+	.cardMark {
+		width: 52px;
+		height: 52px;
+	}
+
+	.cardTitle {
+		font-size: 17px;
+	}
+
+	.panel {
+		border: 1px solid var(--line);
+		border-radius: 8px;
+	}
+
+	.content {
+		padding: 24px 30px 34px;
+	}
+
+	.hint {
+		display: block;
+		margin-top: 6px;
+		color: var(--muted);
+		font-size: 10px;
+		text-align: center;
+	}
+}
+
+@media (min-width: 900px) {
+	.top {
+		height: calc(68px + var(--safe-top));
+		padding-inline: 28px;
+	}
+
+	.logo {
+		width: 42px;
+		height: 42px;
+	}
+
+	.brand {
+		font-size: 18px;
+	}
+
+	.hero {
+		min-height: 350px;
+		background-position: center 54%;
+	}
+
+	.sectionHead {
+		margin-top: 28px;
+	}
+
+	.sectionHead h2 {
+		font-size: 26px;
+	}
+
+	.grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.card {
+		grid-template-columns: 62px minmax(0, 1fr) 32px;
+		min-height: 118px;
+		padding: 16px;
+		border-radius: 8px;
+	}
+
+	.cardMark {
+		width: 60px;
+		height: 60px;
+	}
+
+	.readerLayout {
+		display: grid;
+		grid-template-columns: 300px minmax(0, 1fr);
+		gap: 24px;
+		align-items: start;
+	}
+
+	.readerArt {
+		position: sticky;
+		top: 92px;
+		display: flex;
+		min-height: 440px;
+		align-items: center;
+		justify-content: center;
+		padding: 24px;
+		overflow: hidden;
+		border-radius: 8px;
+		background: #b8716c url("../assets/images/lyrics_side_bg.jpeg") center / cover no-repeat;
+		box-shadow: var(--shadow-lg);
+	}
+
+	.readerArt::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle, rgba(255, 250, 242, 0.1), rgba(74, 31, 48, 0.18));
+	}
+
+	.readerArtThumb {
+		position: relative;
+		z-index: 1;
+		display: block;
+		width: 180px;
+		height: 180px;
+		border: 3px solid rgba(255, 255, 255, 0.72);
+		border-radius: 50%;
+		background-color: var(--card-tint, #f5e5d8);
+		background-image: var(--deity-image, url("../assets/images/om.png"));
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		box-shadow: 0 18px 45px rgba(76, 28, 48, 0.24);
+	}
+
+	.content {
+		padding: 34px 42px 44px;
+	}
+
+	.lyrics {
+		font-size: clamp(20px, 1.65vw, 25px);
+		line-height: 1.68;
+	}
+}
+
+@media (min-width: 1300px) {
+	.grid {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.hero {
+		min-height: 390px;
+	}
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+	.hero {
+		min-height: 118px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		scroll-behavior: auto !important;
+		animation: none !important;
+		transition: none !important;
+	}
+}

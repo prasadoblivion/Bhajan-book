@@ -1,55 +1,83 @@
 <!doctype html>
 <html lang="mr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#7c3f1d">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Bhajan Book">
-<link rel="manifest" href="manifest.json">
-<title>Bhajan Book</title>
-<style>
-:root{--bg:#fffaf2;--card:#fff;--text:#2d2119;--muted:#786b61;--accent:#954d22;--border:#eadccc}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-button,a{font:inherit}a{color:inherit;text-decoration:none}
-.top{position:sticky;top:0;z-index:20;background:#fffaf2f2;backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px}
-.logo{width:42px;height:42px;border-radius:14px;background:#8d461f;color:#fff;display:grid;place-items:center;font-size:22px}
-.brand{font-weight:800;font-size:18px}.sub{font-size:12px;color:var(--muted)}
-.topHome{margin-left:auto;width:44px;height:44px;border:1px solid var(--border);background:#fff;border-radius:14px;font-size:20px;cursor:pointer}
-main{max-width:1050px;margin:auto;padding:22px 16px 35px}.view{display:none}.view.active{display:block}
-h1{font-size:clamp(27px,6vw,40px);margin:8px 0 6px;letter-spacing:-.7px}.intro{color:var(--muted);margin:0 0 20px;font-size:14px}
-.search{height:50px;background:#fff;border:1px solid var(--border);border-radius:16px;display:flex;align-items:center;padding:0 13px;margin-bottom:17px}.search input{width:100%;border:0;outline:0;background:none;color:var(--text);font-size:15px;margin-left:8px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px}.card{display:block;background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 7px 25px #4d301516;transition:transform .18s;cursor:pointer}.card:hover{transform:translateY(-2px)}.thumb{width:100%;aspect-ratio:16/10;display:block}.body{padding:13px 14px 15px}.title{font-weight:750;font-size:16px}.meta{font-size:12px;color:var(--muted);margin-top:4px}
-.reader{max-width:800px;margin:auto}.readerTop{display:flex;align-items:center;gap:10px;margin-bottom:15px}.btn{min-height:44px;border:1px solid var(--border);background:#fff;border-radius:14px;padding:0 14px;color:var(--text);font-weight:700;cursor:pointer}.count{margin-left:auto;color:var(--muted);font-size:13px}
-.panel{background:#fff;border:1px solid var(--border);border-radius:23px;overflow:hidden;box-shadow:0 8px 28px #4d301516}.content{padding:23px clamp(18px,5vw,40px) 30px}.content h2{font-size:clamp(26px,6vw,38px);margin:0 0 5px}.content .meta{font-size:13px;margin-bottom:14px}.lyrics{white-space:pre-line;font-family:"Noto Sans Devanagari","Nirmala UI",Mangal,serif;font-size:clamp(19px,3.8vw,24px);line-height:1.62}
-.nav{position:sticky;bottom:0;padding:13px 0 calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 30%);z-index:10}.navrow{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:8px}.nav button{min-height:52px;border:1px solid var(--border);border-radius:16px;background:#fff;color:var(--text);font-weight:750;cursor:pointer}.nav .next{background:var(--accent);color:#fff;border-color:var(--accent)}.nav button:disabled{opacity:.4;cursor:not-allowed}.hint{text-align:center;color:var(--muted);font-size:11px;margin-top:7px}
-@media(max-width:600px){main{padding:14px 12px 24px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{border-radius:16px}.body{padding:10px}.title{font-size:14px}.readerTop{margin-bottom:10px}.content{padding:15px 15px 18px}.content h2{font-size:26px;margin-bottom:3px}.content .meta{margin-bottom:10px}.lyrics{font-size:18px;line-height:1.52}.nav{padding-top:9px}.nav button{font-size:12px;min-height:48px}}
-@media(max-width:380px){.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header class="top"><div class="logo">ॐ</div><div><div class="brand">Bhajan Book</div><div class="sub">Simple • devotional • offline</div></div><button class="topHome" id="homeBtn" type="button" aria-label="Bhajan list">⌂</button></header>
-<main>
-<section id="listView" class="view active"><h1>Bhajans</h1><p class="intro">Tap any bhajan. Once open, use <b>Next Bhajan</b> to continue without returning to this list.</p><label class="search">⌕<input id="search" type="search" placeholder="Search bhajans…" autocomplete="off"></label><div id="grid" class="grid"></div></section>
-<section id="readerView" class="view"><div class="reader"><div class="readerTop"><button class="btn" id="backBtn" type="button">← All Bhajans</button><span id="count" class="count"></span></div><div class="panel"><div class="content"><h2 id="rtitle"></h2><div id="rmeta" class="meta"></div><div id="lyrics" class="lyrics"></div></div></div><div class="nav"><div class="navrow"><button id="prevBtn" type="button">← Previous</button><button id="nextBtn" class="next" type="button">Next Bhajan →</button><button id="listBtn" type="button">☰ List</button></div><div class="hint">Swipe left/right on the lyrics • Keyboard ← / → also works</div></div></div></section>
-</main>
-<script>
-const bhajans=[{"title":"सुखकर्ता दुःखहर्ता","subtitle":"गणपतीची मराठी आरती","type":"ganesha","lyrics":"सुखकर्ता दुःखहर्ता वार्ता विघ्नाची ।\nनुरवी पुरवी प्रेम कृपा जयाची ॥\nसर्वांगी सुंदर उटी शेंदुराची ।\nकंठी झळके माळ मुक्ताफळांची ॥१॥\n\nजय देव जय देव जय मंगलमूर्ती ।\nदर्शनमात्रे मनकामना पुरती ॥\n\nरत्नखचित फरा तुज गौरीकुमरा ।\nचंदनाची उटी कुंकुमकेशरा ॥\nहिरेजडित मुकुट शोभतो बरा ।\nरुणझुणती नूपुरे चरणीं घागरिया ॥२॥\n\nजय देव जय देव जय मंगलमूर्ती ।\nदर्शनमात्रे मनकामना पुरती ॥\n\nलंबोदर पीतांबर फणीवरबंधना ।\nसरळ सोंड वक्रतुंड त्रिनयना ॥\nदास रामाचा वाट पाहे सदना ।\nसंकटी पावावे निर्वाणी रक्षावे सुरवरवंदना ॥३॥\n\nजय देव जय देव जय मंगलमूर्ती ।\nदर्शनमात्रे मनकामना पुरती ॥"},{"title":"शेंदूर लाल चढायो","subtitle":"गणेश आरती","type":"ganesha","lyrics":"शेंदुर लाल चढायो अच्छा गजमुख को ।\nदोंदिल लाल बिराजे सुत गौरीहर को ॥\nहाथ लिए गुडलड्डू सांई सुरवर को ।\nमहिमा कहे न जाय लागत हूँ पद को ॥१॥\n\nजय जय जी गणराज विद्यासुखदाता ।\nधन्य तुम्हारो दर्शन मेरा मन रमता ॥\n\nअष्टौ सिद्धि दासी संकट को बैरी ।\nविघ्नविनाशन मंगल मूरत अधिकारी ॥\nकोटीसूरजप्रकाश ऐसी छबी तेरी ।\nगंडस्थल मदमस्तक झूले शशिबिहारी ॥२॥\n\nजय जय जी गणराज विद्यासुखदाता ।\nधन्य तुम्हारो दर्शन मेरा मन रमता ॥\n\nभावभगत से कोई शरणागत आवे ।\nसंतत संपत सबही भरपूर पावे ॥\nऐसे तुम महाराज मोको अति भावे ।\nगोसावीनंदन निशिदिन गुण गावे ॥३॥\n\nजय जय जी गणराज विद्यासुखदाता ।\nधन्य तुम्हारो दर्शन मेरा मन रमता ॥"},{"title":"दुर्गे दुर्घट भारी","subtitle":"देवीची मराठी आरती","type":"durga","lyrics":"दुर्गे दुर्घट भारी तुजविण संसारी ।\nअनाथनाथे अंबे करुणा विस्तारी ॥\nवारी वारीं जन्ममरणाते वारी ।\nहारी पडलो आता संकट नीवारी ॥१॥\n\nजय देवी जय देवी महिषासुरमथनी ।\nसुरवरईश्वरवरदे तारक संजीवनी ॥\n\nत्रिभुवनी भुवनी पाहतां तुज ऐसे नाही ।\nचारी श्रमले परंतु न बोलवे काही ॥\nसाही विवाद करितां पडिले प्रवाही ।\nते तूं भक्तालागी पावसि लवलाही ॥२॥\n\nजय देवी जय देवी महिषासुरमथनी ।\nसुरवरईश्वरवरदे तारक संजीवनी ॥\n\nप्रसन्न वदने प्रसन्न होसी निजदासां ।\nक्लेशापासूनि सोडी तोडी भवपाशा ॥\nअंबे तुजवांचून कोण पुरविल आशा ।\nनरहरि तल्लीन झाला पदपंकजलेशा ॥३॥\n\nजय देवी जय देवी महिषासुरमथनी ।\nसुरवरईश्वरवरदे तारक संजीवनी ॥"},{"title":"लवथवती विक्राळा","subtitle":"शंकराची मराठी आरती","type":"shiva","lyrics":"लवथवती विक्राळा ब्रह्मांडी माळा ।\nवीषें कंठ काळा त्रिनेत्रीं ज्वाळा ॥\nलावण्यसुंदर मस्तकीं बाळा ।\nतेथुनियां जल निर्मळ वाहे झुळझुळां ॥१॥\n\nजय देव जय देव जय श्रीशंकरा ।\nआरती ओवाळूं तुज कर्पूरगौरा ॥\n\nकर्पूरगौरा भोळा नयनीं विशाळा ।\nअर्धांगीं पार्वती सुमनांच्या माळा ॥\nविभुतीचें उधळण शितिकंठ नीळा ।\nऐसा शंकर शोभे उमावेल्हाळा ॥२॥\n\nजय देव जय देव जय श्रीशंकरा ।\nआरती ओवाळूं तुज कर्पूरगौरा ॥\n\nदेवीं दैत्य सागरमंथन पै केलें ।\nत्यामाजीं जें अवचित हळाहळ उठिलें ॥\nतें त्वां असुरपणें प्राशन केलें ।\nनीळकंठ नाम प्रसिद्ध झालें ॥३॥\n\nजय देव जय देव जय श्रीशंकरा ।\nआरती ओवाळूं तुज कर्पूरगौरा ॥\n\nव्याघ्रांबर फणिवरधर सुंदर मदनारी ।\nपंचानन मनमोहन मुनिजनसुखकारी ॥\nशतकोटीचें बीज वाचे उच्चारी ।\nरघुकुळटिळक रामदासा अंतरीं ॥४॥\n\nजय देव जय देव जय श्रीशंकरा ।\nआरती ओवाळूं तुज कर्पूरगौरा ॥"},{"title":"कर्पूरगौरं","subtitle":"शिव मंत्र","type":"shiva","lyrics":"कर्पूरगौरं करुणावतारं ।\nसंसारसारं भुजगेन्द्रहारम् ॥\nसदावसन्तं हृदयारविन्दे ।\nभवं भवानीसहितं नमामि ॥"},{"title":"घालीन लोटांगण","subtitle":"आरतीनंतरची प्रार्थना","type":"ganesha","lyrics":"घालीन लोटांगण वंदीन चरण ।\nडोळ्यांनी पाहिन रूप तुझे ॥\nप्रेमें आलिंगीन आनंदे पूजीन ।\nभावे ओवाळीन म्हणे नामा ॥१॥\n\nत्वमेव माता च पिता त्वमेव ।\nत्वमेव बंधुश्च सखा त्वमेव ॥\nत्वमेव विद्या द्रविणं त्वमेव ।\nत्वमेव सर्वं मम देवदेव ॥२॥\n\nकायेन वाचा मनसेंद्रियैर्वा ।\nबुद्ध्यात्मना वा प्रकृतिस्वभावात् ॥\nकरोमि यद्यत् सकलं परस्मै ।\nनारायणायेति समर्पयामि ॥३॥\n\nअच्युतं केशवं रामनारायणम् ।\nकृष्णदामोदरं वासुदेवं भजे ॥\nश्रीधरं माधवं गोपिकावल्लभम् ।\nजानकीनायकं रामचंद्रं भजे ॥४॥\n\nहरे राम हरे राम राम राम हरे हरे ।\nहरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे ॥\n\nमंगलमूर्ती मोरया ।\nगणपती बाप्पा मोरया ॥"},{"title":"मंत्र पुष्पांजली","subtitle":"आरतीनंतरची मंत्रपुष्पांजली","type":"ganesha","lyrics":"ॐ यज्ञेन यज्ञमयजन्त देवास्तानि धर्माणि प्रथमान्यासन् ।\nते ह नाकं महिमानः सचन्त यत्र पूर्वे साध्याः सन्ति देवाः ॥१॥\n\nॐ राजाधिराजाय प्रसह्यसाहिने ।\nनमो वयं वैश्रवणाय कुर्महे ॥\nस मे कामान् कामकामाय मह्यं ।\nकामेश्वरो वैश्रवणो ददातु ॥\nकुबेराय वैश्रवणाय महाराजाय नमः ॥२॥\n\nॐ स्वस्ति साम्राज्यं भौज्यं स्वाराज्यं ।\nवैराज्यं पारमेष्ठ्यं राज्यं महाराज्यमाधिपत्यमयं ॥\nसमंतपर्यायी स्यात् सार्वभौमः सार्वायुषः ।\nआंतादापरार्धात् पृथिव्यै समुद्रपर्यंताया एकराळिति ॥३॥\n\nतदप्येषः श्लोकोऽभिगीतो ।\nमरुतः परिवेष्टारो मरुतस्यावसन् गृहे ॥\nआविक्षितस्य कामप्रेर्विश्वेदेवाः सभासद इति ॥४॥\n\nॐ एकदन्ताय विद्महे ।\nवक्रतुण्डाय धीमहि ॥\nतन्नो दंती प्रचोदयात् ॥\n\nमंत्रपुष्पांजली समर्पयामि ॥"}];
-
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-function thumb(type,title){const p={ganesha:["#efc78f","#873f1e","ॐ"],durga:["#e7b59c","#7d2630","दुर्गा"],shiva:["#c3d5e0","#35546a","ॐ"]}[type]||["#efc78f","#873f1e","ॐ"];const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="'+p[0]+'"/><stop offset="1" stop-color="'+p[1]+'"/></linearGradient></defs><rect width="800" height="500" rx="35" fill="url(#g)"/><circle cx="680" cy="90" r="80" fill="#fff" opacity=".15"/><text x="400" y="245" text-anchor="middle" font-size="125" font-family="serif" fill="#fff">'+p[2]+'</text><text x="400" y="350" text-anchor="middle" font-size="31" font-family="Arial" font-weight="700" fill="#fff">'+esc(title)+'</text><text x="400" y="395" text-anchor="middle" font-size="17" font-family="Arial" fill="#fff">ॐ • Bhajan Book</text></svg>';return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(svg)}
-
-const listView=document.getElementById("listView"),readerView=document.getElementById("readerView"),grid=document.getElementById("grid"),search=document.getElementById("search");let current=0;
-function renderList(){const q=search.value.trim().toLowerCase();grid.innerHTML="";bhajans.forEach((b,i)=>{if(q&&!((b.title+" "+b.subtitle).toLowerCase().includes(q)))return;const a=document.createElement("a");a.className="card";a.href="#b"+i;a.innerHTML='<img class="thumb" src="'+thumb(b.type,b.title)+'" alt="'+esc(b.title)+'"><div class="body"><div class="title">'+esc(b.title)+'</div><div class="meta">'+esc(b.subtitle)+'</div></div>';grid.appendChild(a)})}
-function openReader(i){current=i;const b=bhajans[i];document.getElementById("rtitle").textContent=b.title;document.getElementById("rmeta").textContent=b.subtitle;document.getElementById("lyrics").textContent=b.lyrics;document.getElementById("count").textContent=(i+1)+" / "+bhajans.length;document.getElementById("prevBtn").disabled=i===0;document.getElementById("nextBtn").disabled=i===bhajans.length-1;listView.classList.remove("active");readerView.classList.add("active");window.scrollTo(0,0)}
-function showHash(){const m=location.hash.match(/^#b(\d+)$/);if(m){const i=Number(m[1]);if(i>=0&&i<bhajans.length)openReader(i);else location.hash=""}else{readerView.classList.remove("active");listView.classList.add("active");window.scrollTo(0,0)}}
-function go(delta){const i=current+delta;if(i>=0&&i<bhajans.length)location.hash="#b"+i}
-document.getElementById("homeBtn").onclick=()=>location.hash="";document.getElementById("backBtn").onclick=()=>location.hash="";document.getElementById("listBtn").onclick=()=>location.hash="";document.getElementById("prevBtn").onclick=()=>go(-1);document.getElementById("nextBtn").onclick=()=>go(1);search.oninput=renderList;window.addEventListener("hashchange",showHash);
-let sx=0;document.getElementById("lyrics").addEventListener("touchstart",e=>sx=e.changedTouches[0].screenX,{passive:true});document.getElementById("lyrics").addEventListener("touchend",e=>{const d=e.changedTouches[0].screenX-sx;if(Math.abs(d)>70)go(d<0?1:-1)},{passive:true});
-document.addEventListener("keydown",e=>{if(!readerView.classList.contains("active"))return;if(e.key==="ArrowRight")go(1);if(e.key==="ArrowLeft")go(-1);if(e.key==="Escape")location.hash=""});renderList();showHash();
-</script>
-<script>if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js"))}</script>
-</body></html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+		<meta name="theme-color" content="#7c3f1d" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+		<meta name="apple-mobile-web-app-title" content="Bhajan Book" />
+		<meta name="description" content="A peaceful, offline-ready Marathi devotional bhajan and aarti book." />
+		<link rel="manifest" href="manifest.json" />
+		<link rel="stylesheet" href="css/app.css" />
+		<title>Bhajan Book</title>
+	</head>
+	<body>
+		<header class="top">
+			<div class="logo" aria-hidden="true">ॐ</div>
+			<div>
+				<div class="brand">Bhajan Book</div>
+				<div class="sub">आरती • भजन • प्रार्थना</div>
+			</div>
+			<button class="topHome" id="homeBtn" type="button" aria-label="Go to bhajan list" title="Bhajan list">⌂</button>
+		</header>
+		<main>
+			<section id="listView" class="view active">
+				<div class="hero" role="img" aria-label="Lord Ganesha seated among lotus flowers">
+					<h1 class="visuallyHidden">Bhajans, aartis and prayers</h1>
+				</div>
+				<div class="collectionBar">
+					<div id="versionTabs" class="versionTabs" role="tablist" aria-label="Bhajan collection version"></div>
+					<label class="search">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+							<circle cx="11" cy="11" r="7"></circle>
+							<path d="m20 20-4-4"></path>
+						</svg>
+						<input id="search" type="search" placeholder="Search by title or language" autocomplete="off" aria-label="Search bhajans" />
+					</label>
+				</div>
+				<div class="sectionHead">
+					<h2 id="collectionName">Current collection</h2>
+					<span id="collectionCount" class="collectionCount" aria-live="polite"></span>
+				</div>
+				<div id="grid" class="grid"></div>
+			</section>
+			<section id="readerView" class="view">
+				<div class="reader">
+					<div class="readerTop">
+						<button class="btn" id="backBtn" type="button">← All Bhajans</button>
+						<span id="count" class="count"></span>
+					</div>
+					<div class="readerLayout">
+						<div id="readerArt" class="readerArt" aria-hidden="true"></div>
+						<div class="panel">
+							<div class="content">
+								<div class="invocation" aria-hidden="true">॥ श्री ॥</div>
+								<h2 id="rtitle"></h2>
+								<div id="rmeta" class="meta"></div>
+								<div id="lyrics" class="lyrics"></div>
+							</div>
+						</div>
+					</div>
+					<div class="nav">
+						<div class="navrow">
+							<button id="prevBtn" type="button">← Previous</button>
+							<button id="nextBtn" class="next" type="button">Next Bhajan →</button>
+							<button id="listBtn" type="button">☰ List</button>
+						</div>
+						<div class="hint">Swipe left/right on the lyrics • Keyboard ← / → also works</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer class="appFooter">
+			<span class="devName">Developed by Prasad Dasanatti</span>
+			· <a href="mailto:prasad.dasanatti@gmail.com">prasad.dasanatti@gmail.com</a>
+		</footer>
+		<script src="js/bhajans.js"></script>
+		<script src="js/ui.js"></script>
+		<script src="js/navigation.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>

@@ -19,6 +19,9 @@ public class MainActivity extends Activity {
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
+        // Required so fetch()/XHR can load bundled data/*.json and css/js from file:// assets.
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
         settings.setTextZoom(100);
@@ -29,8 +32,8 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (webView != null && webView.getUrl() != null && webView.getUrl().contains("#b")) {
-            webView.loadUrl("file:///android_asset/index.html");
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
         } else {
             super.onBackPressed();
         }
