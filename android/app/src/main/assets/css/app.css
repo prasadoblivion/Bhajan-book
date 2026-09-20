@@ -176,7 +176,7 @@ main {
 
 .hero {
 	position: relative;
-	min-height: 164px;
+	min-height: 264px;
 	margin-bottom: 12px;
 	overflow: hidden;
 	border-radius: 8px;
@@ -605,7 +605,7 @@ a:focus-visible {
 	}
 
 	.hero {
-		min-height: 250px;
+		min-height: 450px;
 	}
 
 	.collectionBar {
@@ -754,7 +754,7 @@ a:focus-visible {
 	}
 
 	.hero {
-		min-height: 390px;
+		min-height: 490px;
 	}
 }
 
