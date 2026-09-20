@@ -34,14 +34,14 @@
 		var q = (query || "").trim().toLowerCase();
 		var shown = 0;
 		bhajans.forEach(function (b, index) {
-			if (q && !(b.title + " " + b.subtitle + " " + b.language).toLowerCase().includes(q)) return;
+			if (q && !(b.title + " " + b.subtitle).toLowerCase().includes(q)) return;
 			shown++;
 			var card = document.createElement("button");
 			card.type = "button";
 			card.className = "card";
 			card.dataset.type = b.type;
 			card.setAttribute("aria-label", b.title + ", " + b.subtitle);
-			card.innerHTML = '<span class="cardMark" aria-hidden="true"><span class="cardNumber">' + String(index + 1).padStart(2, "0") + "</span></span>" + '<span class="cardBody"><span class="cardTitle">' + esc(b.title) + '</span><span class="cardMeta"><span class="langTag">' + esc(b.language) + "</span><span>" + esc(b.subtitle) + "</span></span></span>" + '<span class="cardArrow" aria-hidden="true">›</span>';
+			card.innerHTML = '<span class="cardMark" aria-hidden="true"><span class="cardNumber">' + String(index + 1).padStart(2, "0") + "</span></span>" + '<span class="cardBody"><span class="cardTitle">' + esc(b.title) + '</span><span class="cardMeta">' + esc(b.subtitle) + "</span></span>" + '<span class="cardArrow" aria-hidden="true">›</span>';
 			card.addEventListener("click", function () {
 				onOpen(b.id);
 			});
@@ -58,7 +58,7 @@
 
 	function renderReader(refs, bhajan, index, total) {
 		refs.title.textContent = bhajan.title;
-		refs.meta.innerHTML = '<span class="langTag">' + esc(bhajan.language) + "</span> " + esc(bhajan.subtitle);
+		refs.meta.textContent = bhajan.subtitle;
 		refs.lyrics.textContent = bhajan.lyrics;
 		refs.count.textContent = index + 1 + " / " + total;
 		refs.art.dataset.type = bhajan.type;
