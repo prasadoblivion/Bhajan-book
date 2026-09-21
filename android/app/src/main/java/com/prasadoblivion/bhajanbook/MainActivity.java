@@ -75,6 +75,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Keep the device screen awake while Bhajan Book is open.
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         webView = new WebView(this);
         setContentView(webView);
 
