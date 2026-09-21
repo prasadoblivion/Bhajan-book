@@ -24,6 +24,27 @@
 		art: document.getElementById("readerArt"),
 	};
 
+	var wakeLock = null;
+
+	function requestWakeLock() {
+		if (!("wakeLock" in navigator) || document.visibilityState !== "visible") return;
+		navigator.wakeLock.request("screen").then(function (lock) {
+			wakeLock = lock;
+			wakeLock.addEventListener("release", function () {
+				wakeLock = null;
+			});
+		}).catch(function () {
+			// Screen Wake Lock is optional; native Android keeps the screen awake separately.
+		});
+	}
+
+	function handleVisibilityChange() {
+		if (document.visibilityState === "visible") requestWakeLock();
+	}
+
+	document.addEventListener("visibilitychange", handleVisibilityChange);
+	document.addEventListener("click", requestWakeLock, { passive: true });
+
 	var state = {
 		version: localStorage.getItem(STORAGE_KEY) || "current",
 		bhajans: [],
@@ -149,5 +170,6 @@
 		});
 	}
 
+	requestWakeLock();
 	loadAndRoute();
 })();
